@@ -1134,7 +1134,7 @@ class Overlay{
 					JFileChooser chooser = new JFileChooser();
 					 chooser.setCurrentDirectory(new java.io.File(ImageInterface.getPreviousPath()));
 					 
-					FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, TIF, JPG & GIF Images", "jpg", "gif", "png", "tif");
 					chooser.setFileFilter(filter);
 					int returnVal = chooser.showOpenDialog(null);
 					if (returnVal == JFileChooser.APPROVE_OPTION)
