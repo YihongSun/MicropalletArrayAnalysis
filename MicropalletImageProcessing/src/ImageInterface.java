@@ -446,7 +446,7 @@ public class ImageInterface {
 				tabbedPane.remove(1);
 				tabbedPane.addTab("Image Viewer", null, imageViewPanel, "Locating image coordinates");
 				
-				for(int i = 0; i < channelList.size(); i++)
+				/*for(int i = 0; i < channelList.size(); i++)
 				{
 					Picture picture2 = new Picture(channelList.get(i).getPlainFilePath());
 					picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
@@ -454,7 +454,7 @@ public class ImageInterface {
 					picture2.write(name);
 					picture2 = null;
 					
-				}
+				}*/
 				picture1 = channelList.get(0).getContrastImageFile();
 				imageViewPanel.removeAll();
 				exp = new PictureExplorer(picture1, imageViewPanel);
@@ -700,14 +700,24 @@ public class ImageInterface {
 				RangeValue
 						.setText("The Pixel Range is saved from " + PixelRangeList.get(numChannelInquiry - 1).getLower()
 								+ " to " + PixelRangeList.get(numChannelInquiry - 1).getUpper());
-		
+								
+				Picture picture2 = new Picture(channelList.get(numChannelInquiry - 1).getPlainFilePath());
+				picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
+				String name = "Channel #" + (numChannelInquiry) + " " + channelList.get(numChannelInquiry - 1).getName() + " - Edit.jpg";
+				picture2.write(name);
+				picture2 = null;
+				
 				if(numChannelInquiry < channelList.size()){
 					numChannelInquiry++;
 					scanReqPanel.removeAll();
 					setUpScanReqPanel();
 					scanReqPanel.revalidate();
 					scanReqPanel.repaint();
-					storeInfo(channelList.get(numChannelInquiry - 2).getContrastImageFile().imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
+					Picture testing = channelList.get(numChannelInquiry - 2).getContrastImageFile();
+					
+					storeInfo(testing.imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
+					testing = null;
+					
 					Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
 					imageViewPanel.removeAll();
 					PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
@@ -718,12 +728,17 @@ public class ImageInterface {
 				}
 				else {
 					numChannelInquiry++;
-					storeInfo(channelList.get(numChannelInquiry - 2).getContrastImageFile().imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
+					Picture testing = channelList.get(numChannelInquiry - 2).getContrastImageFile();
+					
+					storeInfo(testing.imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
+					
+					testing = null;
 					setUpInputOutputPanel();
 					setUpParamDisplayPanel();
 					mainUI.revalidate();
 					mainUI.repaint();
 				}
+				System.out.println(Runtime.getRuntime().freeMemory());
 			}
 
 		});	}
@@ -1015,6 +1030,7 @@ public class ImageInterface {
 					pixelFraction);
 			//look for booleans
 			//System.out.println(motherMatrix.length + " " + motherMatrix[0].length + " " + motherMatrix[0][0].length + motherMatrix[0][0][0].length); 7/17/16/16
+
 			for(int rr = 0; rr < motherMatrix.length; rr++)
 			{
 				for(int cc = 0; cc < motherMatrix[0].length; cc++)

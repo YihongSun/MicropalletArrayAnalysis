@@ -10,6 +10,7 @@ import java.io.*;
 
 public class Picture extends SimplePicture
 {
+      private double threshold = 50000000;
       private String fileName;
       private BufferedImage bufferedImage;
       private String extension;
@@ -43,13 +44,22 @@ public class Picture extends SimplePicture
 	{
 		// let the parent class handle this fileName
       super(fileName);
+      image = this.getPixels2D();
+      /*if(image.length * image[0].length > threshold)
+      {
+         double scale = (double)image.length * image[0].length / threshold;
+         scale = Math.pow(scale, 0.5);
+         scale = 1 / scale;
+         this.scale(scale, scale);
+      }
+      image = this.getPixels2D();*/
 	}
    
 	////////////////////// methods ///////////////////////////////////////
    
 	public boolean[][][][] imageProcessing(int startingRow, int startingCol, int endingRow, int endingCol, int well, int border, int dim, double frac, int rrr, int gg, int bb, int redUpp, int greenUpp, int blueUpp, int h1, int h2)
 	{
-      image = this.getPixels2D();
+      
       StartingRow = startingRow;
       StartingCol = startingCol;
       borderLength = border;
