@@ -405,6 +405,7 @@ public class ImageInterface {
 						pixelFraction);
 				imageViewPanel.removeAll();
 				PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
 				imageViewPanel.revalidate();
 				imageViewPanel.repaint();
 				//tabbedPane.remove(1);
@@ -439,6 +440,7 @@ public class ImageInterface {
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 				imageViewPanel.removeAll();
 				PictureExplorer exp=new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
 				imageViewPanel.revalidate();
 				imageViewPanel.repaint();
 				tabbedPane.remove(1);
@@ -448,13 +450,15 @@ public class ImageInterface {
 				{
 					Picture picture2 = new Picture(channelList.get(i).getFilePath());
 					picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
-					String name = "Channel #" + (i+1) + " " + channelList.get(i).getName() + " - Edit.jpg";
+					String name = "Channel #" + (i + 1) + " " + channelList.get(i).getName() + " - Edit.jpg";
 					picture2.write(name);
+					picture2 = null;
 					
 				}
 				picture1 = channelList.get(0).getContrastImageFile();
 				imageViewPanel.removeAll();
 				exp = new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
 				imageViewPanel.revalidate();
 				imageViewPanel.repaint();
 			}
@@ -672,6 +676,12 @@ public class ImageInterface {
 				setUpScanReqPanel();
 				setUpParamDisplayPanel();
 				setUpInputOutputPanel();
+				Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
+				imageViewPanel.removeAll();
+				PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
+				imageViewPanel.revalidate();
+				imageViewPanel.repaint();
 				mainUI.revalidate();
 				mainUI.repaint();
 			}
@@ -701,6 +711,7 @@ public class ImageInterface {
 					Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
 					imageViewPanel.removeAll();
 					PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+					picture1 = null;
 					setUpParamDisplayPanel();
 					imageViewPanel.revalidate();
 					imageViewPanel.repaint();
@@ -758,8 +769,13 @@ public class ImageInterface {
 				setUpScanReqPanel();
 				setUpParamDisplayPanel();
 				setUpInputOutputPanel();
+				Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
+				imageViewPanel.removeAll();
+				PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
 				mainUI.revalidate();
 				mainUI.repaint();
+				
 			}
 
 		});
@@ -817,7 +833,7 @@ public class ImageInterface {
 				paramDisplayPanel.add(channelRepName);
 				paramDisplayPanel.add(colorDisplayLabel);
 				paramDisplayPanel.add(pixDisplayLabel);
-
+			
 			}
 			
 			
@@ -1097,14 +1113,15 @@ public class ImageInterface {
 						}
 						table.write("Final Cell Count: " + count + "\n");
 						System.out.println("Final Cell Count: " + count);
-						numCellFound = count;
+						
 						System.out.println();
 					}
-					
+					numCellFound = count;
 				}
 			}
 			DisplayPic.write(PicFileName);
 			table.close();
+			DisplayPic = null;
 		}
 		catch(IOException i)
 		{
@@ -1239,7 +1256,7 @@ class Channel {
 				{
 					ImageInterface.setPreviousPath(chooser.getCurrentDirectory().getAbsolutePath());
 					l.setText(chooser.getSelectedFile().getName());
-				contrastImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+					contrastImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
 				}
 			}
 		});
