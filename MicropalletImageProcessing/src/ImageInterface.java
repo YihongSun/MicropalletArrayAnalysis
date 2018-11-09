@@ -400,7 +400,7 @@ public class ImageInterface {
 				pixelFraction = PixelFractionInputSlider.getValue()/100.0;
 				System.out.println("Pixel Fraction: " + pixelFraction);
 				System.out.println();
-				Picture picture1 = new Picture(channelList.get(0).getFilePath());
+				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath());
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 						pixelFraction);
 				imageViewPanel.removeAll();
@@ -436,7 +436,7 @@ public class ImageInterface {
 				pixelFraction = PixelFractionInputSlider.getValue()/100.0;
 				System.out.println("Pixel Fraction: " + pixelFraction);
 				System.out.println();
-				Picture picture1 = new Picture(channelList.get(0).getFilePath());
+				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath());
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 				imageViewPanel.removeAll();
 				PictureExplorer exp=new PictureExplorer(picture1, imageViewPanel);
@@ -448,7 +448,7 @@ public class ImageInterface {
 				
 				for(int i = 0; i < channelList.size(); i++)
 				{
-					Picture picture2 = new Picture(channelList.get(i).getFilePath());
+					Picture picture2 = new Picture(channelList.get(i).getPlainFilePath());
 					picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 					String name = "Channel #" + (i + 1) + " " + channelList.get(i).getName() + " - Edit.jpg";
 					picture2.write(name);
@@ -1194,7 +1194,8 @@ class Channel {
 	private ArrayList<Channel> channelList;
 	private Channel classReference = this;
 	private JLabel numChannelsLabel;
-	private String filePath;
+	private String plainFilePath;
+	private String contrastFilePath;
 	PictureExplorer exp;
 	private JPanel imageViewPanel;
 	private Color colorLimt;
@@ -1236,8 +1237,8 @@ class Channel {
 					}
 				}
 				}
-				plainImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
-				filePath = chooser.getSelectedFile().getAbsolutePath();
+				//plainImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+				plainFilePath = chooser.getSelectedFile().getAbsolutePath();
 			}
 		});
 	}
@@ -1256,7 +1257,8 @@ class Channel {
 				{
 					ImageInterface.setPreviousPath(chooser.getCurrentDirectory().getAbsolutePath());
 					l.setText(chooser.getSelectedFile().getName());
-					contrastImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+					//contrastImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+					contrastFilePath = chooser.getSelectedFile().getAbsolutePath();
 				}
 			}
 		});
@@ -1362,10 +1364,12 @@ class Channel {
 	}
 
 	public Picture getContrastImageFile() {
+		contrastImageFile = new Picture(contrastFilePath);
 		return contrastImageFile;
 	}
 
 	public Picture getPlainImageFile() {
+		plainImageFile = new Picture(plainFilePath);
 		return plainImageFile;
 	}
 
@@ -1382,12 +1386,16 @@ class Channel {
 	public void redrawChannel() {
 		fileChooserPanel.revalidate();
 		fileChooserPanel.repaint();
-
 	}
 
-	public String getFilePath() {
-		return filePath;
+	public String getContrastFilePath() {
+		return contrastFilePath;
 	}
+	
+	public String getPlainFilePath(){
+		return plainFilePath;
+	}
+	
 }
 
 class PixelRange {
