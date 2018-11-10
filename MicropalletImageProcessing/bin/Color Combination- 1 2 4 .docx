@@ -735,10 +735,10 @@ Location: (5, 14)
 11 - - - - - - - - - - - - - - - - 
 12 - - - - - - - - - - - - - - - - 
 13 - - - - - - - - - - - - - - - - 
-14 X - - - X - - - - - - - - - - - 
+14 X - - - X - - - - X - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 101
+Final Cell Count: 102
 Location: (5, 15)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -757,7 +757,7 @@ Location: (5, 15)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - X - - - - - - - - - - - - - - 
-Final Cell Count: 102
+Final Cell Count: 103
 Location: (5, 16)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -776,7 +776,7 @@ Location: (5, 16)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - X - - - - - - - - - - - 
-Final Cell Count: 104
+Final Cell Count: 105
 Location: (6, 10)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -795,7 +795,7 @@ Location: (6, 10)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 105
+Final Cell Count: 106
 Location: (6, 12)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -814,7 +814,7 @@ Location: (6, 12)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 106
+Final Cell Count: 107
 Location: (6, 13)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -833,7 +833,7 @@ Location: (6, 13)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 108
+Final Cell Count: 109
 Location: (6, 14)
    A B C D E F G H I J K L M N 
 1  - - - - - - - - - - - - - - - - 
@@ -852,7 +852,7 @@ Location: (6, 14)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 111
+Final Cell Count: 112
 Location: (6, 15)
    A B C D E F G H I J K L M N 
 1  - - - - - - - X - - - - - - - - 
@@ -871,4 +871,4 @@ Location: (6, 15)
 14 - - - - - - - - - - - - - - - - 
 15 - - - - - - - - - - - - - - - - 
 16 - - - - - - - - - - - - - - - - 
-Final Cell Count: 113
+Final Cell Count: 114
