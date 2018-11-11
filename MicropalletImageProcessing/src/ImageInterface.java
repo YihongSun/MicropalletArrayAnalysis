@@ -733,17 +733,13 @@ public class ImageInterface {
 					storeInfo(testing.imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
 					
 					testing = null;
-					Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
-					imageViewPanel.removeAll();
-					PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
-					picture1 = null;
 					
 					setUpInputOutputPanel();
 					setUpParamDisplayPanel();
 					mainUI.revalidate();
 					mainUI.repaint();
 				}
-				System.out.println(Runtime.getRuntime().freeMemory());
+				//System.out.println(Runtime.getRuntime().freeMemory());
 			}
 
 		});	}
@@ -1030,7 +1026,7 @@ public class ImageInterface {
 		try
 		{
 			FileWriter table = new FileWriter(TextFileName);
-			DisplayPic = o1.getPicture();
+			DisplayPic = new Picture(o1.getPictureAddress());
 			DisplayPic.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 					pixelFraction);
 			//look for booleans
@@ -1154,15 +1150,16 @@ public class ImageInterface {
 class Overlay{
 	private JPanel panel;
 	private Picture imageFile = null;
+	private String imageAddress = null;
 	
 	public Overlay(JPanel panel)
 	{
 		this.panel=panel;
 	}
 	
-	public Picture getPicture()
+	public String getPictureAddress()
 	{
-		return imageFile;
+		return imageAddress;
 	}
 	
 	public void addChooseFileButtonListener(JButton b) {
@@ -1178,7 +1175,8 @@ class Overlay{
 					if (returnVal == JFileChooser.APPROVE_OPTION)
 					{//nope
 					}
-					imageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+					//imageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+					imageAddress = chooser.getSelectedFile().getAbsolutePath();
 				}
 			});
 		}
@@ -1311,71 +1309,76 @@ class Channel {
 	
 	public void addChannel() {
 
-		ChannelLabel = new JLabel("Channel #" + channelNumber + ":");
-		fileChooserPanel.add(ChannelLabel);
+		try{
+			ChannelLabel = new JLabel("Channel #" + channelNumber + ":");
+			fileChooserPanel.add(ChannelLabel);
 
-		ChannelNameTextField = new JTextField();
-		fileChooserPanel.add(ChannelNameTextField);
+			ChannelNameTextField = new JTextField();
+			fileChooserPanel.add(ChannelNameTextField);
 
-		JButton plainImageButton = new JButton("Choose Plain Image", new ImageIcon("chooose_image_icon.png"));
-		JLabel plainImageLabel = new JLabel("No file chosen");
-		addChoosePlainFileButtonListener(plainImageButton, plainImageLabel);
-		addButtonHoverEffectGreen(plainImageButton);
-		
-		JButton removeChannelButton = new JButton("Remove Channel", new ImageIcon("cross.jpg"));
-		addButtonHoverEffectRed(removeChannelButton);
-		JButton contrastImageButton = new JButton("Choose Contrast Image", new ImageIcon("chooose_image_icon.png"));
-		JLabel contrastImageLabel = new JLabel("No file chosen");
-		addButtonHoverEffectGreen(contrastImageButton);
-		addChooseContrastFileButtonListener(contrastImageButton, contrastImageLabel);
-		JLabel EmptySpace = new JLabel("");
-		JLabel EmptySpace1 = new JLabel("");
-		removeChannelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				numChannelsLabel.setText("Number of Channels: " + (channelList.size() - 1));
+			JButton plainImageButton = new JButton("Choose Plain Image", new ImageIcon("chooose_image_icon.png"));
+			JLabel plainImageLabel = new JLabel("No file chosen");
+			addChoosePlainFileButtonListener(plainImageButton, plainImageLabel);
+			addButtonHoverEffectGreen(plainImageButton);
+			
+			JButton removeChannelButton = new JButton("Remove Channel", new ImageIcon("cross.jpg"));
+			addButtonHoverEffectRed(removeChannelButton);
+			JButton contrastImageButton = new JButton("Choose Contrast Image", new ImageIcon("chooose_image_icon.png"));
+			JLabel contrastImageLabel = new JLabel("No file chosen");
+			addButtonHoverEffectGreen(contrastImageButton);
+			addChooseContrastFileButtonListener(contrastImageButton, contrastImageLabel);
+			JLabel EmptySpace = new JLabel("");
+			JLabel EmptySpace1 = new JLabel("");
+			removeChannelButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					numChannelsLabel.setText("Number of Channels: " + (channelList.size() - 1));
 
-				fileChooserPanel.remove(ChannelLabel);
-				fileChooserPanel.remove(ChannelNameTextField);
-				fileChooserPanel.remove(plainImageButton);
-				fileChooserPanel.remove(plainImageLabel);
-				fileChooserPanel.remove(removeChannelButton);
-				fileChooserPanel.remove(contrastImageButton);
-				fileChooserPanel.remove(contrastImageLabel);
-				fileChooserPanel.remove(contrastImageLabel);
-				fileChooserPanel.remove(EmptySpace);
-				fileChooserPanel.remove(EmptySpace1);
-				ImageInterface.deleteChannel(classReference);
-				ImageInterface.setUpInputOutputPanel();
-				ImageInterface.setUpParamDisplayPanel();
+					fileChooserPanel.remove(ChannelLabel);
+					fileChooserPanel.remove(ChannelNameTextField);
+					fileChooserPanel.remove(plainImageButton);
+					fileChooserPanel.remove(plainImageLabel);
+					fileChooserPanel.remove(removeChannelButton);
+					fileChooserPanel.remove(contrastImageButton);
+					fileChooserPanel.remove(contrastImageLabel);
+					fileChooserPanel.remove(contrastImageLabel);
+					fileChooserPanel.remove(EmptySpace);
+					fileChooserPanel.remove(EmptySpace1);
+					ImageInterface.deleteChannel(classReference);
+					ImageInterface.setUpInputOutputPanel();
+					ImageInterface.setUpParamDisplayPanel();
 
 
-				for (int i = 0; i < channelList.size(); i++) {
-					channelList.get(i).changeChannelNumber(i + 1);
+					for (int i = 0; i < channelList.size(); i++) {
+						channelList.get(i).changeChannelNumber(i + 1);
+					}
+					redrawChannel();
+					if (channelNumber == 1) {
+						imageViewPanel.removeAll();
+						if (channelList.size() > 0 && channelList.get(0).getPlainImageFile() != null)
+							exp = new PictureExplorer(channelList.get(0).getPlainImageFile(), imageViewPanel);
+						imageViewPanel.revalidate();
+						imageViewPanel.repaint();
+					}
+					//setUpInputOutputPanel();
 				}
-				redrawChannel();
-				if (channelNumber == 1) {
-					imageViewPanel.removeAll();
-					if (channelList.size() > 0 && channelList.get(0).getPlainImageFile() != null)
-						exp = new PictureExplorer(channelList.get(0).getPlainImageFile(), imageViewPanel);
-					imageViewPanel.revalidate();
-					imageViewPanel.repaint();
-				}
-				//setUpInputOutputPanel();
-			}
-		});
+			});
 
-		fileChooserPanel.add(removeChannelButton);
-		fileChooserPanel.add(plainImageButton);
-		fileChooserPanel.add(plainImageLabel);
+			fileChooserPanel.add(removeChannelButton);
+			fileChooserPanel.add(plainImageButton);
+			fileChooserPanel.add(plainImageLabel);
 
-		fileChooserPanel.add(EmptySpace);
-		fileChooserPanel.add(contrastImageButton);
-		fileChooserPanel.add(contrastImageLabel);
+			fileChooserPanel.add(EmptySpace);
+			fileChooserPanel.add(contrastImageButton);
+			fileChooserPanel.add(contrastImageLabel);
 
-		fileChooserPanel.add(EmptySpace1);
-
-		System.out.println("Channel #" + channelNumber + " Added");
+			fileChooserPanel.add(EmptySpace1);
+	
+			System.out.println("Channel #" + channelNumber + " Added");
+		}
+		catch(java.lang.NullPointerException e){
+			System.out.println(e.getMessage());
+		}
 
 	}
 
