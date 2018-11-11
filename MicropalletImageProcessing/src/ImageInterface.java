@@ -92,21 +92,48 @@ public class ImageInterface {
 	public static int numCellFound = 0;
 	public static JPanel imageEditPanel;
 	public static String previousPath=".";
-	public static String hintIconPath = "images/hint.jpg";
 	public static boolean upperSelected;
+	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		
-		try {
-		
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		       if ("Nimbus".equals(info.getName())) {
-		           UIManager.setLookAndFeel(info.getClassName());
-		           break;
-		        }
-		    }
-		} catch (Exception e) {
+
+		  UIManager.put( "control", new Color(58, 58, 58) );
+		  UIManager.put( "info", new Color(128,128,128) );
+		  UIManager.put( "nimbusBase", new Color( 1, 3, 4) );
+		  UIManager.put( "nimbusAlertYellow", new Color( 248, 187, 0) );
+		  UIManager.put( "nimbusDisabledText", new Color( 128, 128, 128) );
+		  UIManager.put( "nimbusFocus", new Color(115,164,209) );
+		  UIManager.put( "nimbusGreen", new Color(176,179,50) );
+		  UIManager.put( "nimbusInfoBlue", new Color( 66, 139, 221) );
+		  UIManager.put( "nimbusLightBackground", new Color( 18, 30, 49) );
+		  UIManager.put( "nimbusOrange", new Color(191,98,4) );
+		  UIManager.put( "nimbusRed", new Color(169,46,34) );
+		  UIManager.put( "nimbusSelectedText", new Color( 255, 255, 255) );
+		  UIManager.put( "nimbusSelectionBackground", new Color( 104, 93, 156) );
+		  UIManager.put( "text", new Color( 200, 200, 200) );
 		  
-		}
+
+		  try {
+		    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+		      if ("Nimbus".equals(info.getName())) {
+		          javax.swing.UIManager.setLookAndFeel(info.getClassName());
+		          break;
+		      }
+		    }
+		  } catch (ClassNotFoundException e) {
+		    e.printStackTrace();
+		  } catch (InstantiationException e) {
+		    e.printStackTrace();
+		  } catch (IllegalAccessException e) {
+		    e.printStackTrace();
+		  } catch (javax.swing.UnsupportedLookAndFeelException e) {
+		    e.printStackTrace();
+		  } catch (Exception e) {
+		    e.printStackTrace();
+		  }
+		  // Show your JFrame
+		
+	
 		loadFrame();
 
 		loadMainUI();
@@ -229,11 +256,13 @@ public class ImageInterface {
 	    return resizedImg;
 	}
 	
-	public static void setUpImagePrepPanel() {
+	public static void setUpImagePrepPanel() throws IOException {
 		ArrayList<JButton> tempButtonArray=new ArrayList<JButton>();
 		
 		JLabel StartingRow = new JLabel("Starting Row: ");
-		ImageIcon hintIcon= new ImageIcon(hintIconPath);
+
+		ImageIcon hintIcon= new ImageIcon(ImageIO.read(ImageInterface.class.getResourceAsStream("hint.jpg")));
+				
 		Image hintImage=hintIcon.getImage();
 		Image scaledHint=hintImage.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 		
@@ -1065,7 +1094,19 @@ public class ImageInterface {
 		
 		try
 		{
-			PrintWriter table = new PrintWriter(TextFileName);
+			JFileChooser chooser = new JFileChooser();
+			 chooser.setCurrentDirectory(new java.io.File("."));
+			 chooser.setDialogTitle("Select File Output Path");
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int returnVal = chooser.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION)
+			{//nope
+			}
+			
+			//plainImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+			String path = chooser.getSelectedFile().getAbsolutePath();
+			
+			PrintWriter table = new PrintWriter(path + "/" + TextFileName);
 			writeParam(table);
 			DisplayPic = new Picture(o1.getPictureAddress());
 			DisplayPic.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
@@ -1184,7 +1225,7 @@ public class ImageInterface {
 					numCellFound = count;
 				}
 			}
-			DisplayPic.write(PicFileName);
+			DisplayPic.write(path + "/" + PicFileName);
 			table.close();
 			DisplayPic = null;
 		}
