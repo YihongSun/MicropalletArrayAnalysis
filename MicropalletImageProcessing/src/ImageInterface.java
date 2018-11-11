@@ -733,6 +733,11 @@ public class ImageInterface {
 					storeInfo(testing.imageProcessing(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction, colorArrayLower.get(numChannelInquiry - 2).getRed(), colorArrayLower.get(numChannelInquiry - 2).getGreen(), colorArrayLower.get(numChannelInquiry - 2).getBlue(), colorArrayHigher.get(numChannelInquiry - 2).getRed(), colorArrayHigher.get(numChannelInquiry - 2).getGreen(), colorArrayHigher.get(numChannelInquiry - 2).getBlue(), PixelRangeList.get(numChannelInquiry - 2).getLower(), PixelRangeList.get(numChannelInquiry - 2).getUpper()), numChannelInquiry - 2);
 					
 					testing = null;
+					Picture picture1 = channelList.get(numChannelInquiry - 1).getContrastImageFile();
+					imageViewPanel.removeAll();
+					PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+					picture1 = null;
+					
 					setUpInputOutputPanel();
 					setUpParamDisplayPanel();
 					mainUI.revalidate();

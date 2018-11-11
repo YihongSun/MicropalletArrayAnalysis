@@ -4,22 +4,6 @@
 /Channel$4.class
 /Channel$5.class
 /Channel.class
-/Color Combination- 1 .docx
-/Color Combination- 1 2 .docx
-/Color Combination- 1 2 3 .docx
-/Color Combination- 1 2 3 4 .docx
-/Color Combination- 1 2 3 5 .docx
-/Color Combination- 1 2 4 .docx
-/Color Combination- 1 2 4 5 .docx
-/Color Combination- 1 2 5 .docx
-/Color Combination- 1 3 4 .docx
-/Color Combination- 1 4 .docx
-/Color Combination- 2 .docx
-/Color Combination- 2 4 .docx
-/Color Combination- 2 4 5 .docx
-/Color Combination- 3 4 .docx
-/DONTCHANGE.jpg
-/DONTCHANGE.png
 /DigitalPicture.class
 /FileChooser.class
 /ImageDisplay.class
@@ -49,9 +33,6 @@
 /ImageInterface$9.class
 /ImageInterface.class
 /IntArrayWorker.class
-/Manifest.MF.txt
-/Micropallet_Image_Analysis
-/Micropallet_Image_Analysis.jar
 /Overlay$1.class
 /Overlay$2.class
 /Overlay.class
@@ -71,8 +52,4 @@
 /SimplePicture.class
 /ThreadTest$1.class
 /ThreadTest.class
-/hint.jpg
-/images/
-/leftArrow.gif
-/resources/
-/rightArrow.gif
+/Picture$1WorkerTask.class

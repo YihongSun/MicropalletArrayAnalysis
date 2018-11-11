@@ -170,6 +170,33 @@ public class Picture extends SimplePicture
       
       int R = (int)(image.length / (dimension * (wellborder + fraction) * 0.987)) - 1;
       int C = (int)(image[0].length / (dimension * (wellborder + fraction) * 0.987)) - 1;
+      
+       class WorkerTask implements Runnable {
+    	   int rr;
+    	   WorkerTask(int rr)
+    	   {
+    		   this.rr=rr;
+    	   }
+    	   public void run() {
+ 			  
+ 			  for(int cc = 0; cc < C; cc++)
+ 		         {
+ 		            for(int r = 0; r < dim; r++)
+ 		            {
+ 		               for(int c = 0; c < dim; c++)
+ 		               {
+ 		                  draw(rr, cc, r, c);
+ 		               }
+ 		            }
+ 		         }
+ 		  }
+    	   
+       }
+       //for(int rr = 0; rr < R; rr++)
+       //{
+      // new Thread(new WorkerTask(rr)).start();
+       //}
+
       for(int rr = 0; rr < R; rr++)
       {
          for(int cc = 0; cc < C; cc++)
