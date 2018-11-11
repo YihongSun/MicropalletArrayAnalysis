@@ -261,8 +261,8 @@ public class ImageInterface {
 		
 		JLabel StartingRow = new JLabel("Starting Row: ");
 
-		ImageIcon hintIcon= new ImageIcon(ImageIO.read(ImageInterface.class.getResourceAsStream("hint.jpg")));
-				
+		//ImageIcon hintIcon= new ImageIcon(ImageIO.read(ImageInterface.class.getResourceAsStream("hint.jpg")));
+		ImageIcon hintIcon= new ImageIcon("");
 		Image hintImage=hintIcon.getImage();
 		Image scaledHint=hintImage.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 		
