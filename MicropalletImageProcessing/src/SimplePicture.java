@@ -76,6 +76,21 @@ public class SimplePicture implements DigitalPicture
 		
 	}
 	
+	public SimplePicture(String fileName, int limit)
+	{
+		load(fileName);
+		
+		
+		if (getWidth() * getHeight() > threshold) {
+			double scale = (double) getWidth() * getHeight() / threshold;
+			scale = Math.pow(scale, 0.5);
+			scale = 1 / scale;		
+			resize(scale);
+		}
+		
+		crop(limit);
+	}
+	
 	/**
 	* A constructor that takes the width and height desired for a picture and
 	* creates a buffered image of that size.  This constructor doesn't 
@@ -568,6 +583,14 @@ public class SimplePicture implements DigitalPicture
 	 bufferedImage=outputImage;
 	 outputImage=null;
     }
+
+	public static void crop(int rowLimit)
+	{
+		BufferedImage outputImage = bufferedImage.getSubimage(0, 0, bufferedImage.getWidth(), rowLimit);
+		bufferedImage = outputImage;
+		outputImage = null;
+
+	}
  
     /**
      * Resizes an image by a percentage of original size (proportional).

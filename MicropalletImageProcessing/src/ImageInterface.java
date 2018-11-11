@@ -1,4 +1,4 @@
-//update 1109
+
 import java.util.Scanner;
 import java.io.*;
 //import com.sun.media.imageio.plugins.tiff.*;
@@ -38,6 +38,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.*;
@@ -361,6 +365,41 @@ public class ImageInterface {
 		      });
 		    //make a new draw frame method that delivers a transparent picture including 
 		    
+		
+		JButton QuickAdjustments = new JButton("<html>Apply Quick<br>Adjustments <br> in Partial Image</html>");
+		QuickAdjustments.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("<<Trying Parameters>>");
+				startingRow = Integer.parseInt(StartingRowInput.getText());
+				System.out.println("Starting Row: " + startingRow);
+				startingCol = Integer.parseInt(StartingColInput.getText());
+				System.out.println("Starting Column: " + startingCol);
+				endingRow = Integer.parseInt(EndingRowInput.getText());
+				System.out.println("Ending Row: " + endingRow);
+				endingCol = Integer.parseInt(EndingColInput.getText());
+				System.out.println("Ending Column: " + endingCol);
+				wellSize = Integer.parseInt(WellSizeInput.getText());
+				System.out.println("Well Size: " + wellSize);
+				borderSize = Integer.parseInt(BorderSizeInput.getText());
+				System.out.println("Border Size: " + borderSize);
+				gridDimension = Integer.parseInt(GridDimensionInput.getText());
+				System.out.println("Grid Dimension: " + gridDimension);
+				pixelFraction = PixelFractionInputSlider.getValue()/100.0;
+				System.out.println("Pixel Fraction: " + pixelFraction);
+				System.out.println();
+				
+				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath(), 860);
+				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
+						pixelFraction);
+				imageViewPanel.removeAll();
+				PictureExplorer exp = new PictureExplorer(picture1, imageViewPanel);
+				picture1 = null;
+				imageViewPanel.revalidate();
+				imageViewPanel.repaint();
+			}
+		});
+		
 		JButton ClearButton = new JButton("Clear");
 		ClearButton.addActionListener(new ActionListener() {
 			@Override
@@ -378,7 +417,7 @@ public class ImageInterface {
 			}
 		});
 
-		JButton SaveButton = new JButton("Save and Try Parameters");
+		JButton SaveButton = new JButton("<html>Save Parameters &<br>Try Whole Image</html>");
 		SaveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -414,7 +453,7 @@ public class ImageInterface {
 			}
 		});
 
-		JButton ComfirmButton = new JButton("Fix Param & Grid Image");
+		JButton ComfirmButton = new JButton("<html>Finalize Parameters & <br>Next Step</html>");
 		ComfirmButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -488,9 +527,10 @@ public class ImageInterface {
 		imagePrepPanel.add(PixelFraction);
 		imagePrepPanel.add(PixelFractionExp);
 		imagePrepPanel.add(PixelFractionInputSlider);
-		imagePrepPanel.add(ClearButton);
+		imagePrepPanel.add(QuickAdjustments);
 		imagePrepPanel.add(SaveButton);
 		imagePrepPanel.add(ComfirmButton);
+		imagePrepPanel.add(ClearButton);
 	}
 	
 	public static void setUpScanReqPanel() {
@@ -1019,16 +1059,18 @@ public class ImageInterface {
 		for (int i = 0; i < inquiry.length; i++) {
 			FileName = FileName + (inquiry[i] + 1) + " ";
 		}
-		String TextFileName = FileName + ".docx";
+		String TextFileName = FileName + ".txt";
 		String PicFileName = FileName + ".jpg";
 		boolean newline;
 		
 		try
 		{
-			FileWriter table = new FileWriter(TextFileName);
+			PrintWriter table = new PrintWriter(TextFileName);
+			writeParam(table);
 			DisplayPic = new Picture(o1.getPictureAddress());
 			DisplayPic.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 					pixelFraction);
+			
 			//look for booleans
 			//System.out.println(motherMatrix.length + " " + motherMatrix[0].length + " " + motherMatrix[0][0].length + motherMatrix[0][0][0].length); 7/17/16/16
 
@@ -1084,14 +1126,20 @@ public class ImageInterface {
 					numCellFound = 0;
 					if(counter > 0)
 					{
-						table.write("Location: (" + rr + ", " + cc + ")\n");
+						table.print("Location: (" + rr + ", " + cc + ")\n");
 						System.out.println("Location: (" + rr + ", " + cc + ")\n");
 						for(int r = 0; r <= displayMatrix.length; r++)
 						{
 							if(r == 0)
-							{
-									table.write("   A B C D E F G H I J K L M N \n");
-									System.out.println("   A B C D E F G H I J K L M N \n");
+							{	
+								String line = "   ";
+								for (int i = 0; i < displayMatrix.length; i++)
+								{
+									line += (char)(65 + i) + " ";
+								}
+								line += "\n";
+									table.print(line);
+									System.out.println(line);
 							}
 							else
 							{
@@ -1100,10 +1148,10 @@ public class ImageInterface {
 								  if(c == 0 )
 								  {
 										if(r < 10){                       
-											table.write(r + "  ");
+											table.print(r + "  ");
 											System.out.print(r + "  ");}
 										else{
-											table.write(r + " ");
+											table.print(r + " ");
 											System.out.print(r + " ");}
 								  }
 								  else
@@ -1122,15 +1170,15 @@ public class ImageInterface {
 									  {
 										  line = line + "\n";
 									  }
-									  table.write(line);
+									  table.print(line);
 									  System.out.print(line);
 								  }
 							  }
 						  }
 						}
-						table.write("Final Cell Count: " + count + "\n");
+						table.print("Final Cell Count: " + count + "\n");
 						System.out.println("Final Cell Count: " + count);
-						
+						table.print("\n");
 						System.out.println();
 					}
 					numCellFound = count;
@@ -1144,6 +1192,46 @@ public class ImageInterface {
 		{
 			System.out.println("Error: " + i.getMessage());
 		}
+	}
+	
+	public static void writeParam(PrintWriter F)
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Calendar calobj = Calendar.getInstance();
+		F.printf("%-100s %-25s\n", "Micropallet Array Analysis Results", df.format(calobj.getTime()));
+		F.println();
+		F.println("<<<Gridding Parameters>>>");
+		F.println("Starting Row: " + startingRow);
+		F.println("Starting Column: " + startingCol);
+		F.println("Ending Row: " + endingRow);
+		F.println("Ending Column: " + endingCol);
+		F.println("Well Size: " + wellSize);
+		F.println("Border Size: " + borderSize);
+		F.println("Grid Dimension: " + gridDimension);
+		F.println("Pixel Fraction: " + pixelFraction);
+		F.println();
+		F.println();
+						
+		F.println("<<<Scanning Parameters>>>");
+		F.println();
+		F.printf("%-25s %-50s %-35s\n", "Number of Channels: " + channelList.size(), "Ranges for Color Selection", "Ranges of Pixels");
+
+		for(int i = 0; i < colorArrayLower.size(); i++)
+		{
+			String first = "Lower Color Bound: R: " + colorArrayLower.get(i).getRed() + " G: " + colorArrayLower.get(i).getGreen() + " B: " + colorArrayLower.get(i).getBlue();
+			String second = "Upper Color Bound: R: " + colorArrayHigher.get(i).getRed() + " G: " + colorArrayHigher.get(i).getGreen() + " B: " + colorArrayHigher.get(i).getBlue();
+			int hi = i + 1;
+			String Hi = "" + hi;
+			F.printf("%-25s %-50s %-35s\n", "Channel #" + Hi + ": " + channelList.get(i).getName(), first, "Lower Pixel Bound: " + PixelRangeList.get(i).getLower());
+			
+			F.printf("%-25s %-50s %-35s\n", " ", second, "Higher Pixel Bound: " + PixelRangeList.get(i).getUpper());
+			
+			F.println();
+			F.println();
+		
+		}
+		F.println("<<<Target Cell Positions>>>");
+		F.println();
 	}
 }
 

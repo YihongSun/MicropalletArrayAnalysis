@@ -47,12 +47,17 @@ public class Picture extends SimplePicture
       super(fileName);
 	}
    
+   public Picture(String fileName, int limit)
+   {
+      super(fileName, limit);
+   }
+   
 	////////////////////// methods ///////////////////////////////////////
    
 	public boolean[][][][] imageProcessing(int startingRow, int startingCol, int endingRow, int endingCol, int well, int border, int dim, double frac, int rrr, int gg, int bb, int redUpp, int greenUpp, int blueUpp, int h1, int h2)
 	{
 
-	  image = this.getPixels2D();
+	   image = this.getPixels2D();
       StartingRow = startingRow;
       StartingCol = startingCol;
       borderLength = border;
