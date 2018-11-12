@@ -40,7 +40,7 @@ public class SimplePicture implements DigitalPicture
    */
   private String extension;
 
-	private double threshold = 50000000;
+	private double threshold = 30000000;
  
 	/////////////////////// Constructors /////////////////////////
 	
