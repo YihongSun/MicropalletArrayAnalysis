@@ -1,0 +1,42 @@
+Micropallet Array Analysis Results                                                                   11/11/18 18:13:16        
+
+<<<Gridding Parameters>>>
+Starting Row: 155
+Starting Column: 154
+Ending Row: 65
+Ending Column: 8600
+Well Size: 20
+Border Size: 10
+Grid Dimension: 16
+Pixel Fraction: 0.65
+
+
+<<<Scanning Parameters>>>
+
+Number of Channels: 6     Ranges for Color Selection                         Ranges of Pixels                   
+Channel #1:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+Channel #2:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+Channel #3:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+Channel #4:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+Channel #5:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+Channel #6:               Lower Color Bound: R: 0 G: 153 B: 153              Lower Pixel Bound: 4               
+                          Upper Color Bound: R: 255 G: 255 B: 255            Higher Pixel Bound: 20             
+
+
+<<<Target Cell Positions>>>
+

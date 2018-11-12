@@ -93,6 +93,7 @@ public class ImageInterface {
 	public static JPanel imageEditPanel;
 	public static String previousPath=".";
 	public static boolean upperSelected;
+	public static String EditImagePath = "/Users/yihongsun/Desktop/test1";
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		
@@ -529,6 +530,7 @@ public class ImageInterface {
 				picture1 = null;
 				imageViewPanel.revalidate();
 				imageViewPanel.repaint();
+				setOutputAddress();
 			}
 		});
 
@@ -561,7 +563,19 @@ public class ImageInterface {
 		imagePrepPanel.add(ComfirmButton);
 		imagePrepPanel.add(ClearButton);
 	}
-	
+	public static void setOutputAddress(){
+		JFileChooser chooser = new JFileChooser();
+		 chooser.setCurrentDirectory(new java.io.File("."));
+		 chooser.setDialogTitle("Select Gridded Image Output Path");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = chooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION)
+		{//nope
+		}
+		
+		//plainImageFile = new Picture(chooser.getSelectedFile().getAbsolutePath());
+		EditImagePath = chooser.getSelectedFile().getAbsolutePath();
+	}
 	public static void setUpScanReqPanel() {
 		upperSelected = false;
 		GridBagConstraints c = new GridBagConstraints();
@@ -773,7 +787,7 @@ public class ImageInterface {
 				Picture picture2 = new Picture(channelList.get(numChannelInquiry - 1).getPlainFilePath());
 				picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 				String name = "Channel #" + (numChannelInquiry) + " " + channelList.get(numChannelInquiry - 1).getName() + " - Edit.jpg";
-				picture2.write(name);
+				picture2.write(EditImagePath + "/" + name);
 				picture2 = null;
 				
 				if(numChannelInquiry < channelList.size()){
@@ -1096,7 +1110,7 @@ public class ImageInterface {
 		{
 			JFileChooser chooser = new JFileChooser();
 			 chooser.setCurrentDirectory(new java.io.File("."));
-			 chooser.setDialogTitle("Select File Output Path");
+			 chooser.setDialogTitle("Select Search Result Output Path");
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int returnVal = chooser.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION)
