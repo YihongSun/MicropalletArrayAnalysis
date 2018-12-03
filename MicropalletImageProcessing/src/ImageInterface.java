@@ -94,6 +94,7 @@ public class ImageInterface {
 	public static String previousPath=".";
 	public static boolean upperSelected;
 	public static String EditImagePath = "/Users/yihongsun/Desktop/test1";
+	public static int threshold = 30000000;
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		
@@ -181,7 +182,7 @@ public class ImageInterface {
 
 				numChannels.setText(channelList.size() + 1 + "");
 				Channel tempChannel = new Channel(Integer.parseInt(numChannels.getText()), numChannelsLabel,
-						fileChooserPanel, channelList, imageViewPanel);
+						fileChooserPanel, channelList, imageViewPanel, threshold);
 				tempChannel.addChannel();
 
 				channelList.add(tempChannel);
@@ -235,6 +236,41 @@ public class ImageInterface {
 		});
 
 		JLabel SpaceFill = new JLabel("");
+		
+		JLabel RamOutput = new JLabel("<html>Select Optimal RAM Capacity<br>RAM Usage: 8GB</html>");
+		JButton RamConfirm = new JButton("Confirm");
+		
+		JSlider RamSelect = new JSlider(8,32,8);
+		RamSelect.setMajorTickSpacing(1);
+		RamSelect.setPaintTicks(true);
+	    
+		 java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
+		    labelTable.put(new Integer(32), new JLabel("32GB"));
+		    labelTable.put(new Integer(20), new JLabel("20GB"));
+		    
+		    labelTable.put(new Integer(8), new JLabel("8GB"));
+		    RamSelect.setLabelTable( labelTable );
+		    RamSelect.setPaintLabels(true);
+		    
+		    RamSelect.addChangeListener(new javax.swing.event.ChangeListener(){
+		        public void stateChanged(javax.swing.event.ChangeEvent ce){
+						RamOutput.setText("<html>Select Optimal RAM Capacity<br>RAM Usage: " + RamSelect.getValue() + "GB</html>");
+					imagePrepPanel.revalidate();
+					imagePrepPanel.repaint();
+		        }
+		      });
+		
+		RamConfirm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				threshold = 30000000 + (int)(((double) (RamSelect.getValue() - 8) / 24.0) * 20000000);
+			}
+		});
+		
+		fileChooserPanel.add(RamOutput);
+		fileChooserPanel.add(RamSelect);
+		fileChooserPanel.add(RamConfirm);
+
 
 		fileChooserPanel.add(addChannelButton);
 		fileChooserPanel.add(numChannelsLabel);
@@ -262,8 +298,8 @@ public class ImageInterface {
 		
 		JLabel StartingRow = new JLabel("Starting Row: ");
 
-		ImageIcon hintIcon= new ImageIcon(ImageIO.read(ImageInterface.class.getResourceAsStream("hint.jpg")));
-		//ImageIcon hintIcon= new ImageIcon("");
+		//ImageIcon hintIcon= new ImageIcon(ImageIO.read(ImageInterface.class.getResourceAsStream("hint.jpg")));
+		ImageIcon hintIcon= new ImageIcon("");
 		Image hintImage=hintIcon.getImage();
 		Image scaledHint=hintImage.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 		
@@ -419,7 +455,7 @@ public class ImageInterface {
 				System.out.println("Pixel Fraction: " + pixelFraction);
 				System.out.println();
 				
-				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath(), 860);
+				Picture picture1 = new Picture(threshold, channelList.get(0).getPlainFilePath(), 860);
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 						pixelFraction);
 				imageViewPanel.removeAll();
@@ -469,7 +505,7 @@ public class ImageInterface {
 				pixelFraction = PixelFractionInputSlider.getValue()/100.0;
 				System.out.println("Pixel Fraction: " + pixelFraction);
 				System.out.println();
-				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath());
+				Picture picture1 = new Picture(threshold, channelList.get(0).getPlainFilePath());
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 						pixelFraction);
 				imageViewPanel.removeAll();
@@ -505,7 +541,7 @@ public class ImageInterface {
 				pixelFraction = PixelFractionInputSlider.getValue()/100.0;
 				System.out.println("Pixel Fraction: " + pixelFraction);
 				System.out.println();
-				Picture picture1 = new Picture(channelList.get(0).getPlainFilePath());
+				Picture picture1 = new Picture(threshold, channelList.get(0).getPlainFilePath());
 				picture1.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 				imageViewPanel.removeAll();
 				PictureExplorer exp=new PictureExplorer(picture1, imageViewPanel);
@@ -784,7 +820,7 @@ public class ImageInterface {
 						.setText("The Pixel Range is saved from " + PixelRangeList.get(numChannelInquiry - 1).getLower()
 								+ " to " + PixelRangeList.get(numChannelInquiry - 1).getUpper());
 								
-				Picture picture2 = new Picture(channelList.get(numChannelInquiry - 1).getPlainFilePath());
+				Picture picture2 = new Picture(threshold, channelList.get(numChannelInquiry - 1).getPlainFilePath());
 				picture2.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension, pixelFraction);
 				String name = "Channel #" + (numChannelInquiry) + " " + channelList.get(numChannelInquiry - 1).getName() + " - Edit.jpg";
 				picture2.write(EditImagePath + "/" + name);
@@ -1056,7 +1092,7 @@ public class ImageInterface {
 	public static void drawPicture(String f) throws IOException {
 		System.out.println(f);
 		imageViewPanel.removeAll();
-		PictureExplorer exp = new PictureExplorer(new Picture(f), imageViewPanel);
+		PictureExplorer exp = new PictureExplorer(new Picture(threshold, f), imageViewPanel);
 
 	}
 
@@ -1122,7 +1158,7 @@ public class ImageInterface {
 			
 			PrintWriter table = new PrintWriter(path + "/" + TextFileName);
 			writeParam(table);
-			DisplayPic = new Picture(o1.getPictureAddress());
+			DisplayPic = new Picture(threshold, o1.getPictureAddress());
 			DisplayPic.drawFrame(startingRow, startingCol, endingRow, endingCol, wellSize, borderSize, gridDimension,
 					pixelFraction);
 			
@@ -1361,13 +1397,15 @@ class Channel {
 	PictureExplorer exp;
 	private JPanel imageViewPanel;
 	private Color colorLimt;
+	private int threshold = 30000000;
 
-	public Channel(int channel, JLabel numChannelsLabel, JPanel panel, ArrayList<Channel> cList, JPanel imagepanel) {
+	public Channel(int channel, JLabel numChannelsLabel, JPanel panel, ArrayList<Channel> cList, JPanel imagepanel, int th) {
 		channelNumber = channel;
 		fileChooserPanel = panel;
 		channelList = cList;
 		this.numChannelsLabel = numChannelsLabel;
 		imageViewPanel = imagepanel;
+		threshold = th;
 
 	}
 
@@ -1531,12 +1569,12 @@ class Channel {
 	}
 
 	public Picture getContrastImageFile() {
-		contrastImageFile = new Picture(contrastFilePath);
+		contrastImageFile = new Picture(threshold, contrastFilePath);
 		return contrastImageFile;
 	}
 
 	public Picture getPlainImageFile() {
-		plainImageFile = new Picture(plainFilePath);
+		plainImageFile = new Picture(threshold, plainFilePath);
 		return plainImageFile;
 	}
 

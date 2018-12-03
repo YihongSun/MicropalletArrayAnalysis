@@ -52,6 +52,15 @@ public class Picture extends SimplePicture
       super(fileName, limit);
    }
    
+   public Picture(int th, String fileName)
+   {
+      super(th, fileName);
+   }
+   
+   public Picture(int th, String fileName, int limit)
+   {
+      super(th, fileName, limit);
+   }
 	////////////////////// methods ///////////////////////////////////////
    
 	public boolean[][][][] imageProcessing(int startingRow, int startingCol, int endingRow, int endingCol, int well, int border, int dim, double frac, int rrr, int gg, int bb, int redUpp, int greenUpp, int blueUpp, int h1, int h2)

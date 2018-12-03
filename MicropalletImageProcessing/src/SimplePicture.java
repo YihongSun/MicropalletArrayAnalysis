@@ -76,10 +76,41 @@ public class SimplePicture implements DigitalPicture
 		
 	}
 	
+	public SimplePicture(int th, String fileName)
+	{
+		load(fileName);
+		
+		threshold = th;
+		
+		if (getWidth() * getHeight() > threshold) {
+			double scale = (double) getWidth() * getHeight() / threshold;
+			scale = Math.pow(scale, 0.5);
+			scale = 1 / scale;		
+			resize(scale);
+		}
+		
+	}
+	
 	public SimplePicture(String fileName, int limit)
 	{
 		load(fileName);
 		
+		
+		if (getWidth() * getHeight() > threshold) {
+			double scale = (double) getWidth() * getHeight() / threshold;
+			scale = Math.pow(scale, 0.5);
+			scale = 1 / scale;		
+			resize(scale);
+		}
+		
+		crop(limit);
+	}
+	
+	public SimplePicture(int th, String fileName, int limit)
+	{
+		load(fileName);
+		
+		threshold = th;
 		
 		if (getWidth() * getHeight() > threshold) {
 			double scale = (double) getWidth() * getHeight() / threshold;
